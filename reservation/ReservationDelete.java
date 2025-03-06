@@ -21,7 +21,7 @@ int reservationId = Integer.parseInt(request.getParameter("reservationId"));
         if (isDeleted) {
             response.sendRedirect("success.jsp"); 
         } else {
-            response.sendRedirect("error.jsp"); 
+            response.sendRedirect("unsuccess.jsp"); 
         }
 	}
 
