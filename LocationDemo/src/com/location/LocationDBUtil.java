@@ -1,119 +1,122 @@
 package com.location;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LocationDBUtil {
-    private static final String URL = "jdbc:mysql://localhost:3306/locationdb";
-    private static final String USER = "root";
-    private static final String PASSWORD = "1234";
 
-    private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
-    }
+    private static boolean isSuccess;
+    private static Connection con = null;
+    private static Statement stmt = null;
+    private static ResultSet rs = null;
 
-    public static boolean insertLocation(Location location) {
-        String sql = "INSERT INTO Locations (Loc_id, Country, State, City, Phone, streetno, street) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, location.getLocId());
-            stmt.setString(2, location.getCountry());
-            stmt.setString(3, location.getState());
-            stmt.setString(4, location.getCity());
-            stmt.setString(5, location.getPhone());
-            stmt.setString(6, location.getStreetNo());
-            stmt.setString(7, location.getStreet());
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    // Insert ================================
+    public static boolean insertLocation(String district, String locationContactNo, String address, 
+                                        String streetNo, String city, String street) {
+        boolean isSuccess = false;
 
+        try {
+            con = DBConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "INSERT INTO Location VALUES (0, '" + district + "', '" + locationContactNo + "', '" + 
+                        address + "', '" + streetNo + "', '" + city + "', '" + street + "')";
+            int rs = stmt.executeUpdate(sql);
 
-    public static List<Location> getAllLocations() {
-        List<Location> locations = new ArrayList<>();
-        String sql = "SELECT * FROM Locations";
-        try (Connection conn = getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                Location location = new Location(
-                    rs.getInt("Loc_id"),
-                    rs.getString("Country"),
-                    rs.getString("State"),
-                    rs.getString("City"),
-                    rs.getString("Phone"),
-                    rs.getString("streetno"),
-                    rs.getString("street")
-                );
-                locations.add(location);
+            if (rs > 0) {
+                isSuccess = true;
+            } else {
+                isSuccess = false;
             }
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return isSuccess;
+    }
+
+    // Retrieve ================================
+    public static List<Location> getLocationDetails(String locationId) {
+        int convertedID = Integer.parseInt(locationId);
+        ArrayList<Location> locations = new ArrayList<>();
+
+        try {
+            con = DBConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "SELECT * FROM Location WHERE location_id = '" + convertedID + "'";
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int location_id = rs.getInt(1);
+                String district = rs.getString(2);
+                String location_contact_no = rs.getString(3);
+                String address = rs.getString(4);
+                String street_no = rs.getString(5);
+                String city = rs.getString(6);
+                String street = rs.getString(7);
+
+                Location loc = new Location(location_id, district, location_contact_no, 
+                                         address, street_no, city, street);
+                locations.add(loc);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return locations;
     }
 
-    public static boolean updateLocation(Location location) {
-        String sql = "UPDATE Locations SET Country = , State = , City = , Phone = , streetno = , street =  WHERE Loc_id = ";
-        
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, location.getCountry());
-            stmt.setString(2, location.getState());
-            stmt.setString(3, location.getCity());
-            stmt.setString(4, location.getPhone());
-            stmt.setString(5, location.getStreetNo());
-            stmt.setString(6, location.getStreet());
-            stmt.setInt(7, location.getLocId());
-            
-            return stmt.executeUpdate() > 0;
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-            
-            return false;
-        }
-    }
+    // Update ================================
+    public static boolean updateLocation(String id, String district, String locationContactNo, 
+                                        String address, String streetNo, String city, String street) {
+        try {
+            con = DBConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "UPDATE Location SET district = '" + district + "', " +
+                        "location_contact_no = '" + locationContactNo + "', " +
+                        "address = '" + address + "', " +
+                        "street_no = '" + streetNo + "', " +
+                        "city = '" + city + "', " +
+                        "street = '" + street + "' " +
+                        "WHERE location_id = '" + id + "'";
+            int rs = stmt.executeUpdate(sql);
 
-
-    public static boolean deleteLocation(int locId) {
-        String sql = "DELETE FROM Locations WHERE Loc_id = ";
-        
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, locId);
-            
-            return stmt.executeUpdate() > 0;
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-            
-            return false;
-        }
-    }
-
-    
-    public static Location getLocationById(int locId) {
-        String sql = "SELECT * FROM Locations WHERE Loc_id = ";
-        
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, locId);
-            ResultSet rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-            	
-                return new Location(
-                    rs.getInt("Loc_id"),
-                    rs.getString("Country"),
-                    rs.getString("State"),
-                    rs.getString("City"),
-                    rs.getString("Phone"),
-                    rs.getString("streetno"),
-                    rs.getString("street")
-                );
+            if (rs > 0) {
+                isSuccess = true;
+            } else {
+                isSuccess = false;
             }
-            
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+
+        return isSuccess;
+    }
+
+    // Delete ================================
+    public static boolean deleteLocation(String id) {
+        int convId = Integer.parseInt(id);
+
+        try {
+            con = DBConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "DELETE FROM Location WHERE location_id = '" + convId + "'";
+            int r = stmt.executeUpdate(sql);
+
+            if (r > 0) {
+                isSuccess = true;
+            } else {
+                isSuccess = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
     }
 }

@@ -1,6 +1,9 @@
 package com.location;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,18 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/DeleteLocation")
 public class DeleteLocation extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int locId = Integer.parseInt(request.getParameter("locId"));
-        boolean isDeleted = LocationDBUtil.deleteLocation(locId);
+        
+        String id = request.getParameter("locationId");
+        boolean isTrue;
 
-        if (isDeleted) {
-        	
-            response.sendRedirect("location.jsp");
-            
+        isTrue = LocationDBUtil.deleteLocation(id);
+
+        if (isTrue == true) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("locationinsert.jsp");
+            dispatcher.forward(request, response);
         } else {
-        	
-            response.sendRedirect("deletelocation.jsp?locId=" + locId + "&error=true");
+            List<Location> locDetails = LocationDBUtil.getLocationDetails(id);
+            request.setAttribute("locDetails", locDetails);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("location.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }

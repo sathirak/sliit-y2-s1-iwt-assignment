@@ -1,44 +1,50 @@
 package com.location;
 
 public class Location {
-    private int locId;
-    private String country;
-    private String state;
+    private int location_id;
+    private String district;
+    private String location_contact_no;
+    private String address;
+    private String street_no;
     private String city;
-    private String phone;
-    private String streetNo;
     private String street;
-    
-    public Location() {}
 
-    public Location(int locId, String country, String state, String city, String phone, String streetNo, String street) {
-        this.locId = locId;
-        this.country = country;
-        this.state = state;
+    public Location(int location_id, String district, String location_contact_no, String address, 
+                   String street_no, String city, String street) {
+        this.location_id = location_id;
+        this.district = district;
+        this.location_contact_no = location_contact_no;
+        this.address = address;
+        this.street_no = street_no;
         this.city = city;
-        this.phone = phone;
-        this.streetNo = streetNo;
         this.street = street;
     }
 
-    public int getLocId() { return locId; }
-    public void setLocId(int locId) { this.locId = locId; }
+    public int getLocation_id() {
+        return location_id;
+    }
 
-    public String getCountry() { return country; }
-    public void setCountry(String country) { this.country = country; }
+    public String getDistrict() {
+        return district;
+    }
 
-    public String getState() { return state; }
-    public void setState(String state) { this.state = state; }
+    public String getLocation_contact_no() {
+        return location_contact_no;
+    }
 
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
+    public String getAddress() {
+        return address;
+    }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public String getStreet_no() {
+        return street_no;
+    }
 
-    public String getStreetNo() { return streetNo; }
-    public void setStreetNo(String streetNo) { this.streetNo = streetNo; }
+    public String getCity() {
+        return city;
+    }
 
-    public String getStreet() { return street; }
-    public void setStreet(String street) { this.street = street; }
+    public String getStreet() {
+        return street;
+    }
 }
