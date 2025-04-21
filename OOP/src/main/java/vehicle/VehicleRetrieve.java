@@ -1,4 +1,4 @@
-package com.vehicle;
+package vehicle;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

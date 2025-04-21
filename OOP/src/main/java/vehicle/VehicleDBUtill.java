@@ -1,10 +1,11 @@
-package com.vehicle;
+package vehicle;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import common.DB;
 
 public class VehicleDBUtill {
 
@@ -19,7 +20,7 @@ public class VehicleDBUtill {
 		boolean isSuccess = false;
 
 		try {
-			con = DBConnect.getConnection();
+			con = DB.getConnection();
 			stmt = con.createStatement();
 			String sql = "INSERT INTO vehicle VALUES (0,'" + category + "','" + brand + "','" + model + "','" + plate_no
 					+ "','" + color + "','" + fuel_option + "' ,'" + gear + "','" + seat_count + "' ,'" + daily_rate
@@ -46,7 +47,7 @@ public class VehicleDBUtill {
 
 		try {
 			int convertedID = Integer.parseInt(vehicleId);
-			con = DBConnect.getConnection();
+			con = DB.getConnection();
 			stmt = con.createStatement();
 			String sql = "SELECT * FROM vehicle WHERE vehicle_id = '" + convertedID + "' ";
 			rs = stmt.executeQuery(sql);
@@ -80,7 +81,7 @@ public class VehicleDBUtill {
 			List<Vehicle> vehicles = new ArrayList<>();
 
 			try {
-				con = DBConnect.getConnection();
+				con = DB.getConnection();
 				stmt = con.createStatement();
 				String sql = "SELECT * FROM vehicle";
 				rs = stmt.executeQuery(sql);
@@ -116,7 +117,7 @@ public class VehicleDBUtill {
 			String color, String fuel_option, String gear, int seat_count, float daily_rate) {
 
 		try {
-			con = DBConnect.getConnection();
+			con = DB.getConnection();
 			stmt = con.createStatement();
 			String sql = "UPDATE vehicle SET category = '" + category + "', brand = '" + brand + "', model = '" + model
 					+ "', plate_no = '" + plate_no + "', color = '" + color + "', fuel_option = '" + fuel_option
@@ -143,7 +144,7 @@ public class VehicleDBUtill {
 
 		try {
 
-			con = DBConnect.getConnection();
+			con = DB.getConnection();
 			stmt = con.createStatement();
 			String sql = "DELETE FROM vehicle WHERE id='" + convId + "'";
 			int r = stmt.executeUpdate(sql);
