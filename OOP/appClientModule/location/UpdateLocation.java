@@ -18,13 +18,13 @@ public class UpdateLocation extends HttpServlet {
         String locationId = request.getParameter("location_id");
         String district = request.getParameter("district");
         String locationContactNo = request.getParameter("location_contact_no");
-        String address = request.getParameter("address");
         String streetNo = request.getParameter("street_no");
-        String city = request.getParameter("city");
         String street = request.getParameter("street");
+        String city = request.getParameter("city");
+        
 
         boolean isTrue;
-        isTrue = LocationDBUtil.updateLocation(locationId, district, locationContactNo, address, streetNo, city, street);
+        isTrue = LocationDBUtil.updateLocation(locationId, district, locationContactNo, streetNo, street, city);
 
         if (isTrue == true) {
         	

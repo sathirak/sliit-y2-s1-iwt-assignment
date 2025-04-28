@@ -3,21 +3,19 @@ package com.location;
 public class Location {
     private int location_id;
     private String district;
-    private String location_contact_no;
-    private String address;
+    private String location_contact_no;  
     private String street_no;
-    private String city;
     private String street;
+    private String city;
 
-    public Location(int location_id, String district, String location_contact_no, String address, 
+    public Location(int location_id, String district, String location_contact_no , 
                    String street_no, String city, String street) {
         this.location_id = location_id;
         this.district = district;
         this.location_contact_no = location_contact_no;
-        this.address = address;
         this.street_no = street_no;
-        this.city = city;
         this.street = street;
+        this.city = city;
     }
 
 	public int getLocation_id() {
@@ -43,15 +41,7 @@ public class Location {
 	public void setLocation_contact_no(String location_contact_no) {
 		this.location_contact_no = location_contact_no;
 	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
+	
 	public String getStreet_no() {
 		return street_no;
 	}
@@ -60,20 +50,20 @@ public class Location {
 		this.street_no = street_no;
 	}
 
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
 	public String getStreet() {
 		return street;
 	}
 
 	public void setStreet(String street) {
 		this.street = street;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }
