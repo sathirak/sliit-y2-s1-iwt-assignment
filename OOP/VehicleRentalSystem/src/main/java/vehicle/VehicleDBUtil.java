@@ -1,0 +1,164 @@
+package vehicle;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class VehicleDBUtil {
+
+	private static boolean isSuccess;
+	private static Connection con = null;
+	private static Statement stmt = null;
+	private static ResultSet rs = null;
+
+	// Insert ================================
+	public static boolean insertvehicle(String category, String brand, String model, String plate_no, String color,
+			String fuel_option, String gear, int seat_count, float daily_rate) {
+		boolean isSuccess = false;
+
+		try {
+			con = DBConnect.getConnection();
+			stmt = con.createStatement();
+			String sql = "INSERT INTO vehicle VALUES (0,'" + category + "','" + brand + "','" + model + "','" + plate_no
+					+ "','" + color + "','" + fuel_option + "' ,'" + gear + "','" + seat_count + "' ,'" + daily_rate
+					+ "')";
+
+			int rs = stmt.executeUpdate(sql);
+
+			if (rs > 0) {
+				isSuccess = true;
+			} else {
+				isSuccess = false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return isSuccess;
+	}
+
+	// Retrieve =========== //cus = veh
+	public static List<Vehicle> getVehicleDetails(String vehicleId) {
+		ArrayList<Vehicle> veh = new ArrayList<>();
+
+		try {
+			int convertedID = Integer.parseInt(vehicleId);
+			con = DBConnect.getConnection();
+			stmt = con.createStatement();
+			String sql = "SELECT * FROM vehicle WHERE vehicle_id = '" + convertedID + "' ";
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int vehicle_id = rs.getInt(1);
+				String category = rs.getString(2);
+				String brand = rs.getString(3);
+				String model = rs.getString(4);
+				String plate_no = rs.getString(5);
+				String color = rs.getString(6);
+				String fuel_option = rs.getString(7);
+				String gear = rs.getString(8);
+				int seat_count = rs.getInt(9);
+				float daily_rate = rs.getFloat(10);
+
+				Vehicle v = new Vehicle(vehicle_id, category, brand, model, plate_no, color, fuel_option, gear,
+						seat_count, daily_rate);
+				veh.add(v);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return veh;
+		
+	}
+		// GET ALL VEHICLES=====****chat*I********
+		public static List<Vehicle> getAllVehicles() {
+			List<Vehicle> vehicles = new ArrayList<>();
+
+			try {
+				con = DBConnect.getConnection();
+				stmt = con.createStatement();
+				String sql = "SELECT * FROM vehicle";
+				rs = stmt.executeQuery(sql);
+
+				while (rs.next()) {
+					Vehicle v = new Vehicle(
+						rs.getInt("vehicle_id"),
+						rs.getString("category"),
+						rs.getString("brand"),
+						rs.getString("model"),
+						rs.getString("plate_no"),
+						rs.getString("color"),
+						rs.getString("fuel_option"),
+						rs.getString("gear"),
+						rs.getInt("seat_count"),
+						rs.getFloat("daily_rate")
+					);
+					vehicles.add(v);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return vehicles;
+		}
+		
+		
+	
+		
+
+	// Update ==================
+	public static boolean updatevehicle(String vehicle_id, String category, String brand, String model, String plate_no,
+			String color, String fuel_option, String gear, int seat_count, float daily_rate) {
+
+		try {
+			con = DBConnect.getConnection();
+			stmt = con.createStatement();
+			String sql = "UPDATE vehicle SET category = '" + category + "', brand = '" + brand + "', model = '" + model
+					+ "', plate_no = '" + plate_no + "', color = '" + color + "', fuel_option = '" + fuel_option
+					+ "', gear = '" + gear + "', seat_count = '" + seat_count + "', daily_rate = '" + daily_rate + "',"
+					+ "WHERE vehicle_id = '" + vehicle_id + "'";
+			int rs = stmt.executeUpdate(sql);
+
+			if (rs > 0) {
+				isSuccess = true;
+			} else {
+				isSuccess = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return isSuccess;
+	}
+
+	// Delete========================
+	public static boolean deletevehicle(String vehicle_id) {
+
+		int convId = Integer.parseInt(vehicle_id);
+
+		try {
+
+			con = DBConnect.getConnection();
+			stmt = con.createStatement();
+			String sql = "DELETE FROM vehicle WHERE id='" + convId + "'";
+			int r = stmt.executeUpdate(sql);
+
+			if (r > 0) {
+				isSuccess = true;
+			} else {
+				isSuccess = false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return isSuccess;
+	}
+
+}

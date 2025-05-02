@@ -1,6 +1,5 @@
-INDEX VERSION 1.4+/home/bigchungus/Projects/sliit-y2-s1-iwt-assignment/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
-4148543175.index
-113302952.index
-3903151199.index
-3193546935.index
-4142346262.index
+INDEX VERSION 1.4+C:\Users\sathi\Downloads\sliit-y2-s1-iwt-assignment\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2889385628.index
+2773916439.index
+2582133539.index
+3141463722.index

@@ -1,3 +1,2 @@
-INDEX VERSION 1.134+/home/bigchungus/Projects/sliit-y2-s1-iwt-assignment/.metadata/.plugins/org.eclipse.jdt.core
-4069087556.index
+INDEX VERSION 1.134+C:\Users\sathi\Downloads\sliit-y2-s1-iwt-assignment\.metadata\.plugins\org.eclipse.jdt.core
 1865797976.index
