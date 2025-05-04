@@ -105,7 +105,7 @@
         <a href="#">MENU</a>
     </div>
     <div class="form-container">
-        <form action="insert" method="post">
+        <form action="InsertLocation" method="post">
             <div class="form-row">
                 <div class="form-group">
                     <label>Location ID</label>

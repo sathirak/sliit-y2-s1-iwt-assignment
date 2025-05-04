@@ -1,9 +1,9 @@
-package com.location;
+package common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class DBConnect {
+public class DB {
 	
 	private static String url = "jdbc:mysql://sql12.freesqldatabase.com:3306/?user=sql12774435";
 	private static String userName = "sql12774435";

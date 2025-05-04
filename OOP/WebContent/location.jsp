@@ -76,8 +76,8 @@
                     <td>${location.district}</td>
                     <td>${location.location_contact_no}</td>
                     <td>${location.street_no}</td>
-                    <td>${location.city}</td>
                     <td>${location.street}</td>
+                    <td>${location.city}</td>
                     
                     <td class="action-buttons">
                          <form action="updateLocation.jsp" method="get" style="display:inline;">
@@ -90,7 +90,10 @@
                             <button type="submit" class="update-btn">Update</button>
                         </form>
                         
-                        <button class="delete-btn" onclick="if(confirm('Are you sure you want to delete this location?')) location.href='deleteLocation?location_id=${location.location_id}'">Delete</button>
+                        <form action="deletelocation.jsp" method="post" onsubmit="return confirm('Are you sure you want to delete this location?');">
+                          	<input type="hidden" name="vehicle_id" value="${veh.vehicle_id}" />
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                     </td>
                 </tr>
             </c:forEach>

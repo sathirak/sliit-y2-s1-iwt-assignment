@@ -1,4 +1,4 @@
-package com.location;
+package location;
 
 public class Location {
     private int location_id;
