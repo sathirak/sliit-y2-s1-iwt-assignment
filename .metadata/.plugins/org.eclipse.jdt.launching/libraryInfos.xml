@@ -2,19 +2,6 @@
 <libraryInfos>
     <libraryInfo home="C:\Users\sathi\Downloads\eclipse-jee-2025-03-R-win32-x86_64\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529\jre" version="21.0.6"/>
     <libraryInfo home="C:\Program Files\Java\jdk-24" version="24.0.1"/>
-    <libraryInfo home="/home/bigchungus/Apps/eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_21.0.6.v20250130-0529/jre" version="21.0.6"/>
-    <libraryInfo home="/usr/lib/jvm/java-17-openjdk-amd64" version="17.0.14"/>
-    <libraryInfo home="/home/bigchungus/Apps/eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_21.0.6.v20250130-0529" version="21.0.6">
-        <bootpath>
-            <entry path="null"/>
-        </bootpath>
-        <extensionDirs>
-            <entry path="null"/>
-        </extensionDirs>
-        <endorsedDirs>
-            <entry path="null"/>
-        </endorsedDirs>
-    </libraryInfo>
     <libraryInfo home="C:\Users\sathi\Downloads\eclipse-jee-2025-03-R-win32-x86_64\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529" version="21.0.6">
         <bootpath>
             <entry path="null"/>
