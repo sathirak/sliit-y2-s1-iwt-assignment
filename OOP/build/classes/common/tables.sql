@@ -1,0 +1,3 @@
+USE sql5776488;
+
+SELECT * FROM User;

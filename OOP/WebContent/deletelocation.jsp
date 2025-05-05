@@ -69,9 +69,9 @@
     </div>
 
     <div class="form-container">
-        <form action="deletelocation" method="post">
-            <label for="location_id">Location ID</label>
-            <input type="text" id="location_id" name="location_id" required />
+        <form action="location/delete" method="post">
+            <label for="locationId">Location ID</label>
+            <input type="text" id="locationId" name="locationId" required />
             <button type="submit" onclick="return confirm('Are you sure you want to delete this location?');">Delete Location</button>
         </form>
     </div>

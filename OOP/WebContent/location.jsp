@@ -1,103 +1,103 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="location.Location" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Location Management</title>
+    <meta charset="ISO-8859-1">
+    <title>Location Details</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
         }
-        h1 {
-            color: #8B0000;
+        h2 {
             text-align: center;
-        }
-        .success-message {
-            color: green;
-            text-align: center;
+            color: #333;
         }
         table {
-            width: 100%;
+            width: 80%;
+            margin: 20px auto;
             border-collapse: collapse;
-            margin-top: 20px;
+            border: 1px solid #ccc;
         }
         th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
+            border: 1px solid #ccc;
             text-align: left;
         }
         th {
             background-color: #f2f2f2;
+            font-weight: bold;
         }
-        .action-buttons button {
+        td {
+            background-color: #fff;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons a {
             padding: 5px 10px;
-            margin-right: 5px;
-            border: none;
-            cursor: pointer;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
         }
         .update-btn {
-            background-color: #FFD700;
-            color: black;
+            background-color: #ffeb3b;
+            color: #000;
         }
         .delete-btn {
-            background-color: #FF4500;
-            color: white;
+            background-color: #f44336;
+            color: #fff;
+        }
+        p {
+            text-align: center;
+            color: red;
+        }
+        .message {
+            text-align: center;
+            color: green;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>LOCATION DETAILS</h1>
-    
-    <div class="success-message">
-        <c:if test="${not empty message}">
-            ${message}
-        </c:if>
-    </div>
-
+    <h2>Location Details</h2>
+    <div class="message">Location updated successfully!</div>
+    <%
+        Location location = (Location) request.getAttribute("location");
+        if (location != null) {
+    %>
     <table>
-        <thead>
-            <tr>
-                <th>Location ID</th>
-                <th>District</th>
-                <th>Contact No</th>
-                <th>Street No</th>
-                <th>City</th>
-                <th>Street</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="location" items="${locationList}">
-                <tr>
-                    <td>${location.location_id}</td>
-                    <td>${location.district}</td>
-                    <td>${location.location_contact_no}</td>
-                    <td>${location.street_no}</td>
-                    <td>${location.street}</td>
-                    <td>${location.city}</td>
-                    
-                    <td class="action-buttons">
-                         <form action="updateLocation.jsp" method="get" style="display:inline;">
-                            <input type="hidden" name="location_id" value="${location.location_id}" />
-                            <input type="hidden" name="district" value="${location.district}" />
-                            <input type="hidden" name="location_contact_no" value="${location.location_contact_no}" />
-                            <input type="hidden" name="street_no" value="${location.street_no}" />
-                            <input type="hidden" name="city" value="${location.city}" />
-                            <input type="hidden" name="street" value="${location.street}" />
-                            <button type="submit" class="update-btn">Update</button>
-                        </form>
-                        
-                        <form action="deletelocation.jsp" method="post" onsubmit="return confirm('Are you sure you want to delete this location?');">
-                          	<input type="hidden" name="vehicle_id" value="${veh.vehicle_id}" />
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            </c:forEach>
-        </tbody>
+        <tr>
+            <th>Location ID</th>
+            <th>District</th>
+            <th>Contact No</th>
+            <th>Street No</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <td><%= location.getLocation_id() %></td>
+            <td><%= location.getDistrict() %></td>
+            <td><%= location.getLocation_contact_no() %></td>
+            <td><%= location.getStreet_no() %></td>
+            <td><%= location.getStreet() %></td>
+            <td><%= location.getCity() %></td>
+            <td>
+                <div class="action-buttons">
+                    <a href="#" class="update-btn">Update</a>
+                    <a href="#" class="delete-btn">Delete</a>
+                </div>
+            </td>
+        </tr>
     </table>
+    <%
+        } else {
+    %>
+    <p>No location found.</p>
+    <%
+        }
+    %>
 </body>
 </html>

@@ -4,10 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DB {
-	
-	private static String url = "jdbc:mysql://sql12.freesqldatabase.com:3306/?user=sql12774435";
-	private static String userName = "sql12774435";
-	private static String password = "eApaLQH2Sd";
+	private static String url = "jdbc:mysql://sql5.freesqldatabase.com:3306/sql5776488";
+	private static String userName = "sql5776488";
+	private static String password = "hSGCqr9rLP";
 	private static Connection con;
 
 	public static Connection getConnection() {

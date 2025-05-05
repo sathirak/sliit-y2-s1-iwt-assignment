@@ -10,17 +10,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/ViewLocation")
+@WebServlet("/location")
 public class ViewLocation extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
-        List<Location> locations = LocationDBUtil.getAllLocations();
-        request.setAttribute("locations", locations);
+        
+        String idParam = request.getParameter("id");
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("locationdetails.jsp");
-        dispatcher.forward(request, response);
+        try {
+        	if (idParam != null && !idParam.isEmpty()) {
+        		Location location = LocationDBUtil.getLocationDetails(idParam);
+        		request.setAttribute("location", location);
+        		RequestDispatcher dispatcher = request.getRequestDispatcher("location.jsp");
+        		dispatcher.forward(request, response);
+        	} else {
+        		List<Location> locations = LocationDBUtil.getAllLocations();
+        		request.setAttribute("locations", locations);
+        		RequestDispatcher dispatcher = request.getRequestDispatcher("locations.jsp");
+        		dispatcher.forward(request, response);
+        	}
+        }catch(Exception e){
+                response.getWriter().write("Error retrieving user(s): " + e.getMessage());
+                e.printStackTrace();
+        }
+
     }
 }

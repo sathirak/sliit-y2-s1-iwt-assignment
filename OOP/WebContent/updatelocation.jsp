@@ -102,7 +102,7 @@
 
     <div class="container">
         <h2>Update Location</h2>
-        <form action="update" method="post">
+        <form action="location/update" method="post">
             <div class="form-group">
                 <label for="location_id">Location ID</label>
                 <input type="text" id="location_id" name="location_id" required>
