@@ -6,7 +6,7 @@
 
 <%
     String vehicleId = request.getParameter("vehicle_id");
-    List<Vehicle> vehDetails = VehicleDBUtil.getVehicleDetails(vehicleId);
+    Vehicle vehDetails = VehicleDBUtil.getVehicleDetails(vehicleId);
     request.setAttribute("vehDetails", vehDetails);
 %>
 
