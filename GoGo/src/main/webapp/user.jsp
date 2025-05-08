@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/theme.css">
 </head>
 <body>
+    <%@ include file="common/header.jsp" %>
+    
     <div class="container">
         <h2 class="page-title">User Details</h2>
         <%

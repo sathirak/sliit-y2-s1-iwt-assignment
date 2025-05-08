@@ -5,6 +5,7 @@
 bin/
 tmp/
 build/
+.metadata/
 
 # Compiled class files
 *.class

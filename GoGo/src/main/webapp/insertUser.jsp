@@ -85,11 +85,7 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>CARS</h1>
-        <p>SINCE 2025</p>
-        <p><a href="#" style="color: white; text-decoration: none;">DIRECT INQUIRY</a> | INFO@CARS.COM</p>
-    </div>
+    <%@ include file="common/header.jsp" %>
     <div class="nav">
         <a href="#">MENU</a>
     </div>

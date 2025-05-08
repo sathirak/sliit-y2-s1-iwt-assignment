@@ -37,6 +37,8 @@ body {
 </style>
 </head>
 <body>
+    <%@ include file="common/header.jsp" %>
+    
 	<div class="container">
 		<div class="col-md-8 offset-md-2 form-container">
 			<h2 class="form-title">Add New Vehicle</h2>

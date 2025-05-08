@@ -51,6 +51,7 @@
     </style>
 </head>
 <body>
+    <%@ include file="common/header.jsp" %>
 
 <div class="bg-dark text-white py-2">
     <div class="container d-flex flex-wrap justify-content-between align-items-center">

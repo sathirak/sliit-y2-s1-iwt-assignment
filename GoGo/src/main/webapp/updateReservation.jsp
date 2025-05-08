@@ -19,6 +19,8 @@
 </head>
 <body class="bg-light">
 
+<%@ include file="common/header.jsp" %>
+
 <div class="container mt-5">
     <h2 class="mb-4">Update Reservation</h2>
 

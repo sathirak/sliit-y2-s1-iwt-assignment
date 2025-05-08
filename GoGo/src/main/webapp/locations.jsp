@@ -6,6 +6,7 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Location List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,46 +74,50 @@
     </style>
 </head>
 <body>
-    <h2>Available Locations</h2>
-    <table>
-        <tr>
-            <th>ID (View)</th>
-            <th>District</th>
-            <th>Contact No</th>
-            <th>Street No</th>
-            <th>Street</th>
-            <th>City</th>
-            <th>Actions</th>
-        </tr>
-        <%
-            List<Location> locations = (List<Location>) request.getAttribute("locations");
-            if (locations != null) {
-                for (Location loc : locations) {
-        %>
-        <tr>
-            <td><a href="location?id=<%= loc.getLocation_id() %>"><%= loc.getLocation_id() %></a></td>
-            <td><%= loc.getDistrict() %></td>
-            <td><%= loc.getLocation_contact_no() %></td>
-            <td><%= loc.getStreet_no() %></td>
-            <td><%= loc.getStreet() %></td>
-            <td><%= loc.getCity() %></td>
-            <td class="action-buttons">
-                <!-- Update button -->
-                <form action="location/update" method="get">
-                    <input type="hidden" name="id" value="<%= loc.getLocation_id() %>">
-                    <button type="submit" class="update-btn">Update</button>
-                </form>
-                <!-- Delete button -->
-                <form action="location/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this location?');">
-                    <input type="hidden" name="id" value="<%= loc.getLocation_id() %>">
-                    <button type="submit" class="delete-btn">Delete</button>
-                </form>
-            </td>
-        </tr>
-        <%
+    <%@ include file="common/header.jsp" %>
+    
+    <div class="container mt-4">
+        <h2>Available Locations</h2>
+        <table>
+            <tr>
+                <th>ID (View)</th>
+                <th>District</th>
+                <th>Contact No</th>
+                <th>Street No</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>Actions</th>
+            </tr>
+            <%
+                List<Location> locations = (List<Location>) request.getAttribute("locations");
+                if (locations != null) {
+                    for (Location loc : locations) {
+            %>
+            <tr>
+                <td><a href="location?id=<%= loc.getLocation_id() %>"><%= loc.getLocation_id() %></a></td>
+                <td><%= loc.getDistrict() %></td>
+                <td><%= loc.getLocation_contact_no() %></td>
+                <td><%= loc.getStreet_no() %></td>
+                <td><%= loc.getStreet() %></td>
+                <td><%= loc.getCity() %></td>
+                <td class="action-buttons">
+                    <!-- Update button -->
+                    <form action="location/update" method="get">
+                        <input type="hidden" name="id" value="<%= loc.getLocation_id() %>">
+                        <button type="submit" class="update-btn">Update</button>
+                    </form>
+                    <!-- Delete button -->
+                    <form action="location/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this location?');">
+                        <input type="hidden" name="id" value="<%= loc.getLocation_id() %>">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <%
+                    }
                 }
-            }
-        %>
-    </table>
+            %>
+        </table>
+    </div>
 </body>
 </html>

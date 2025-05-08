@@ -22,6 +22,8 @@
     </style>
 </head>
 <body>
+    <%@ include file="common/header.jsp" %>
+    
     <div class="container form-container">
         <h2 class="mb-4 text-center">Update Vehicle</h2>
         

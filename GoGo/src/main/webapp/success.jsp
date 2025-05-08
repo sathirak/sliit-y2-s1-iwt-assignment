@@ -24,6 +24,7 @@
 </style>
 </head>
 <body>
+    <%@ include file="common/header.jsp" %>
 
 <div class="message-box">
     <h2>Success!</h2>

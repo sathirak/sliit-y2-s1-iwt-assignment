@@ -72,6 +72,8 @@
 </head>
 <body>
 
+<%@ include file="common/header.jsp" %>
+
 <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="#">
         CARSONES <small>Rent A Car</small>

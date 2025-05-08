@@ -11,7 +11,7 @@
 
     <style>
         body {
-            background-color: #6e1818;
+            background-color: #f7f8fa;
             font-family: 'Times New Roman', Times, serif;
         }
 
@@ -86,32 +86,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-               
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-warning me-2" href="vehicle/insert">Add Vehicle</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-info me-2" href="allvehicle.jsp">View as Customer</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-light" href="#">Admin Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
+<%@ include file="common/header.jsp" %>
 
 <div class="container table-container">
     <h2 class="text-center mb-4">Available Vehicles</h2>

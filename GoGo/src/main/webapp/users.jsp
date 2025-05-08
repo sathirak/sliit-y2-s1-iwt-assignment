@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>All Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -72,54 +73,58 @@
     </style>
 </head>
 <body>
-    <h2>All Registered Users</h2>
-    <%
-        List<UserModel> users = (List<UserModel>) request.getAttribute("users");
-        if (users != null && !users.isEmpty()) {
-    %>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>License No</th>
-            <th>Expiry</th>
-            <th>Email</th>
-            <th>Contact</th>
-            <th>Actions</th>
-        </tr>
+    <%@ include file="common/header.jsp" %>
+    
+    <div class="container mt-4">
+        <h2>All Registered Users</h2>
         <%
-            for (UserModel user : users) {
+            List<UserModel> users = (List<UserModel>) request.getAttribute("users");
+            if (users != null && !users.isEmpty()) {
         %>
-        <tr>
-            <td><a href="<%= request.getContextPath() %>/user?id=<%= user.getUserId() %>"><%= user.getUserId() %></a></td>
-            <td><%= user.getFirstName() %> <%= user.getLastName() %></td>
-            <td><%= user.getLicenseNo() %></td>
-            <td><%= user.getLicenseExpiryDate() %></td>
-            <td><%= user.getEmail() %></td>
-            <td><%= user.getContactNo() %></td>
-            <td class="action-buttons">
-                <!-- Update button -->
-                <form action="user/update" method="get">
-                    <input type="hidden" name="id" value="<%= user.getUserId() %>">
-                    <button type="submit" class="update-btn">Update</button>
-                </form>
-                <!-- Delete button -->
-                <form action="user/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this user?');">
-                    <input type="hidden" name="id" value="<%= user.getUserId() %>">
-                    <button type="submit" class="delete-btn">Delete</button>
-                </form>
-            </td>
-        </tr>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>License No</th>
+                <th>Expiry</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+            <%
+                for (UserModel user : users) {
+            %>
+            <tr>
+                <td><a href="<%= request.getContextPath() %>/user?id=<%= user.getUserId() %>"><%= user.getUserId() %></a></td>
+                <td><%= user.getFirstName() %> <%= user.getLastName() %></td>
+                <td><%= user.getLicenseNo() %></td>
+                <td><%= user.getLicenseExpiryDate() %></td>
+                <td><%= user.getEmail() %></td>
+                <td><%= user.getContactNo() %></td>
+                <td class="action-buttons">
+                    <!-- Update button -->
+                    <form action="user/update" method="get">
+                        <input type="hidden" name="id" value="<%= user.getUserId() %>">
+                        <button type="submit" class="update-btn">Update</button>
+                    </form>
+                    <!-- Delete button -->
+                    <form action="user/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <input type="hidden" name="id" value="<%= user.getUserId() %>">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <%
+                }
+            %>
+        </table>
+        <%
+            } else {
+        %>
+            <p>No users found.</p>
         <%
             }
         %>
-    </table>
-    <%
-        } else {
-    %>
-        <p>No users found.</p>
-    <%
-        }
-    %>
+    </div>
 </body>
 </html>

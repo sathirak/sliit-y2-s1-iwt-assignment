@@ -99,6 +99,8 @@
 </head>
 <body>
 
+<%@ include file="common/header.jsp" %>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

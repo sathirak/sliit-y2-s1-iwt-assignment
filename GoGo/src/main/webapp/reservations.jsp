@@ -8,6 +8,8 @@
 </head>
 <body class="bg-light">
 
+<%@ include file="common/header.jsp" %>
+
 <%
     String successMessage = (String) session.getAttribute("success");
     String errorMessage = (String) session.getAttribute("error");

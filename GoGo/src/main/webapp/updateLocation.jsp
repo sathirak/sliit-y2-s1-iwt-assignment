@@ -95,6 +95,8 @@
     </style>
 </head>
 <body>
+    <%@ include file="common/header.jsp" %>
+    
     <div class="header">
         <h1>CARS</h1>
         <p>Since 2025</p>

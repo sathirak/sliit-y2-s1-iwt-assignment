@@ -7,11 +7,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Update User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Update User</h2>
+    <%@ include file="common/header.jsp" %>
     
-    <%
+    <div class="container mt-4">
+        <h2>Update User</h2>
+        
+        <%
                 String userIdStr = request.getParameter("id"); // Retrieve the user ID from the request parameter
                 if (userIdStr != null) {
                     try {
@@ -54,10 +58,11 @@
         <%
             }
         } else {
-    %>
+        %>
         <p>Invalid user ID.</p>
-    <%
-        }
-    %>
+        <%
+            }
+        %>
+    </div>
 </body>
 </html>
