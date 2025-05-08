@@ -73,3 +73,81 @@ Thumbs.db
 *.zip
 *.tar.gz
 *.rar
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+bin/
+tmp/
+build/
+
+# Compiled class files
+*.class
+
+# Build directories
+/build/
+/target/
+/out/
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Gradle
+.gradle/
+gradle-app.setting
+
+# Tomcat
+/Servers/
+
+# Eclipse WTP
+.apt_generated/
+.settings/
+.factorypath
+.springBeans
+.sts4-cache/
+
+# Logs
+*.log
+logs/
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# IDE-specific files
+.metadata/
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.launch
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Allow specific library jars if needed (uncomment if needed)
+!GoGo/src/main/webapp/WEB-INF/lib/*.jar
