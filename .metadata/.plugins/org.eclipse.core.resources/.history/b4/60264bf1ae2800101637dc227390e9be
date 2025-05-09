@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+</head>
+<body>
+    <h2>Create New User</h2>
+    <form action="${pageContext.request.contextPath}/user/insert" method="post">
+        <label for="firstName">First Name:</label><br>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+
+        <label for="lastName">Last Name:</label><br>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+
+        <label for="licenseNo">License Number:</label><br>
+        <input type="text" id="licenseNo" name="licenseNo" required><br><br>
+
+        <label for="licenseExpiryDate">License Expiry Date:</label><br>
+        <input type="date" id="licenseExpiryDate" name="licenseExpiryDate" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="contactNo">Contact Number:</label><br>
+        <input type="text" id="contactNo" name="contactNo" required><br><br>
+
+        <input type="submit" value="Create User">
+    </form>
+</body>
+</html>

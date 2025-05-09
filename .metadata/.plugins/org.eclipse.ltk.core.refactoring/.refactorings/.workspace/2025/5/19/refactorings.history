@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;GoGo/src/main/webapp/index.jsp&apos;" deleteContents="false" description="Delete resource &apos;GoGo/src/main/webapp/index.jsp&apos;" element1="/GoGo/src/main/webapp/index.jsp" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1746340935310"/>&#x0A;<refactoring comment="Delete resource &apos;GoGo/src/main/webapp/user&apos;" deleteContents="false" description="Delete resource &apos;GoGo/src/main/webapp/user&apos;" element1="/GoGo/src/main/webapp/user" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1746712881554"/>
+</session>

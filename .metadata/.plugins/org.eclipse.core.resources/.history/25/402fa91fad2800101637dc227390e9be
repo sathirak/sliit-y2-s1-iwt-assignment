@@ -1,0 +1,7 @@
+
+use sql5776488;
+
+INSERT INTO User (first_name, last_name, license_no, license_expiry_date, email, password, contact_no)
+VALUES 
+('John', 'Doe', 'DL12345', '2026-10-01', 'john.doe@example.com', 'johnpass', '1234567890'),
+('Jane', 'Smith', 'DL54321', '2025-05-15', 'jane.smith@example.com', 'janepass', '9876543210');

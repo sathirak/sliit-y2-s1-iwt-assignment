@@ -1,0 +1,50 @@
+package user;
+
+import java.io.IOException;
+import java.sql.Date;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+@WebServlet("/user/update")
+public class UpdateUser extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+       
+    public UpdateUser() {
+        super();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int userId = Integer.parseInt(request.getParameter("id")); // Parsing the userId to int
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String licenseNo = request.getParameter("licenseNo");
+
+            // Convert licenseExpiryDate from String to Date (ensure the format matches your DB date format)
+            String licenseExpiryDateStr = request.getParameter("licenseExpiryDate");
+            Date licenseExpiryDate = Date.valueOf(licenseExpiryDateStr); // Adjust this if needed (ensure valid format)
+
+            String email = request.getParameter("email");
+            String password = request.getParameter("password"); // Assuming password is part of the update process
+            String contactNo = request.getParameter("contactNo");
+
+            // Creating a UserModel object using the constructor with all the parameters
+            UserModel updatedUser = new UserModel(userId, firstName, lastName, licenseNo, licenseExpiryDate, email, password, contactNo);
+
+            // Update user in DB using UserDBUtil (ensure this method is implemented)
+            boolean success = UserDBUtil.updateUser(updatedUser);
+            if (success) {
+                response.sendRedirect(request.getContextPath() + "/user?id=" + userId); // Redirect to ViewUser page
+            } else {
+                response.getWriter().write("Error updating user.");
+            }
+        } catch (NumberFormatException e) {
+            response.getWriter().write("Invalid user ID.");
+            e.printStackTrace();
+        } catch (Exception e) {
+            response.getWriter().write("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}

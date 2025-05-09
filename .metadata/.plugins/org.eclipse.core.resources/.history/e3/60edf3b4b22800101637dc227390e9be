@@ -1,0 +1,71 @@
+package user;
+
+import java.io.IOException;
+import java.sql.Date;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+@WebServlet("/user/update")
+public class UpdateUser extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public UpdateUser() {
+        super();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String userIdStr = request.getParameter("id");
+            if (userIdStr != null) {
+                int userId = Integer.parseInt(userIdStr);
+                UserModel user = UserDBUtil.getUserDetails(userIdStr); 
+                if (user != null) {
+                    request.setAttribute("user", user);
+                    request.getRequestDispatcher("/updateUser.jsp").forward(request, response);
+                } else {
+                    response.getWriter().write("User not found.");
+                }
+            } else {
+                response.getWriter().write("Invalid user ID.");
+            }
+        } catch (Exception e) {
+            response.getWriter().write("Error retrieving user details: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // Retrieving the form data
+            int userId = Integer.parseInt(request.getParameter("id")); // Parsing userId as an integer
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String licenseNo = request.getParameter("licenseNo");
+
+            // Convert licenseExpiryDate from String to Date
+            String licenseExpiryDateStr = request.getParameter("licenseExpiryDate");
+            Date licenseExpiryDate = Date.valueOf(licenseExpiryDateStr); // Ensure valid date format (yyyy-MM-dd)
+
+            String email = request.getParameter("email");
+            String password = request.getParameter("password"); // Assuming password is part of the update
+            String contactNo = request.getParameter("contactNo");
+
+            // Creating the UserModel object with the form data
+            UserModel updatedUser = new UserModel(userId, firstName, lastName, licenseNo, licenseExpiryDate, email, password, contactNo);
+
+            // Pass the UserModel object to the updateUser method in UserDBUtil
+            UserDBUtil.updateUser(updatedUser);
+
+            // Redirect to the user details page after update
+            response.sendRedirect(request.getContextPath() + "/user?id=" + userId);
+
+        } catch (NumberFormatException e) {
+            response.getWriter().write("Invalid user ID.");
+            e.printStackTrace();
+        } catch (Exception e) {
+            response.getWriter().write("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}

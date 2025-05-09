@@ -1,0 +1,95 @@
+package user;
+
+import java.util.*;
+import java.text.SimpleDateFormat;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+@WebServlet("/user")
+public class User extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private Map<Integer, UserModel> users = new HashMap<>();
+    private int currentId = 1;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // List all users
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/plain");
+        for (UserModel user : users.values()) {
+            out.println(user.getUserId() + ": " + user.getFirstName() + " " + user.getLastName());
+        }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        switch (action) {
+            case "create":
+                createUser(request, response);
+                break;
+            case "read":
+                readUser(request, response);
+                break;
+            case "update":
+                updateUser(request, response);
+                break;
+            case "delete":
+                deleteUser(request, response);
+                break;
+            default:
+                response.getWriter().write("Invalid action");
+        }
+    }
+
+    private void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            UserModel user = new UserModel();
+            user.setUserId(currentId++);
+            user.setFirstName(request.getParameter("firstName"));
+            user.setLastName(request.getParameter("lastName"));
+            user.setLicenseNo(request.getParameter("licenseNo"));
+            user.setLicenseExpiryDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("licenseExpiryDate")));
+            user.setEmail(request.getParameter("email"));
+            user.setPassword(request.getParameter("password"));
+            user.setContactNo(request.getParameter("contactNo"));
+            users.put(user.getUserId(), user);
+            response.getWriter().write("User created with ID: " + user.getUserId());
+        } catch (Exception e) {
+            response.getWriter().write("Error: " + e.getMessage());
+        }
+    }
+
+    private void readUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        UserModel user = users.get(userId);
+        if (user != null) {
+            response.getWriter().write("User: " + user.getFirstName() + " " + user.getLastName());
+        } else {
+            response.getWriter().write("User not found");
+        }
+    }
+
+    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        UserModel user = users.get(userId);
+        if (user != null) {
+            user.setFirstName(request.getParameter("firstName"));
+            user.setLastName(request.getParameter("lastName"));
+            user.setContactNo(request.getParameter("contactNo"));
+            response.getWriter().write("User updated");
+        } else {
+            response.getWriter().write("User not found");
+        }
+    }
+
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        if (users.remove(userId) != null) {
+            response.getWriter().write("User deleted");
+        } else {
+            response.getWriter().write("User not found");
+        }
+    }
+}

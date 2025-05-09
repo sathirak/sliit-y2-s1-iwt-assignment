@@ -1,0 +1,148 @@
+package user;
+
+import common.DB;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserDBUtil {
+
+    private static Connection con = null;
+    private static Statement stmt = null;
+    private static ResultSet rs = null;
+
+    public static boolean insertUser(String firstName, String lastName, String licenseNo, 
+                                     Date licenseExpiryDate, String email, String password, 
+                                     String contactNo) {
+        boolean isSuccess = false;
+
+        try {
+            con = DB.getConnection();
+            String sql = "INSERT INTO Users (first_name, last_name, license_no, license_expiry_date, email, password, contact_no) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, lastName);
+            pstmt.setString(3, licenseNo);
+            pstmt.setDate(4, new java.sql.Date(licenseExpiryDate.getTime()));
+            pstmt.setString(5, email);
+            pstmt.setString(6, password);
+            pstmt.setString(7, contactNo);
+
+            int rows = pstmt.executeUpdate();
+            isSuccess = rows > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
+    }
+
+    public static UserModel getUserDetails(String userId) {
+        UserModel user = null;
+
+        try {
+            int id = Integer.parseInt(userId);
+            con = DB.getConnection();
+            stmt = con.createStatement();
+            String sql = "SELECT * FROM Users WHERE user_id = " + id;
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                user = new UserModel(
+                    rs.getInt("user_id"),
+                    rs.getString("first_name"),
+                    rs.getString("last_name"),
+                    rs.getString("license_no"),
+                    rs.getDate("license_expiry_date"),
+                    rs.getString("email"),
+                    rs.getString("password"),
+                    rs.getString("contact_no")
+                );
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    public static List<UserModel> getAllUsers() {
+        List<UserModel> users = new ArrayList<>();
+
+        try {
+            con = DB.getConnection();
+            stmt = con.createStatement();
+            String sql = "SELECT * FROM Users";
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                users.add(new UserModel(
+                        rs.getInt("user_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("license_no"),
+                        rs.getDate("license_expiry_date"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("contact_no")
+                    ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    public static boolean updateUser(String id, String firstName, String lastName, String licenseNo, 
+                                     Date licenseExpiryDate, String email, String password, 
+                                     String contactNo) {
+        boolean isSuccess = false;
+
+        try {
+            int userId = Integer.parseInt(id);
+            con = DB.getConnection();
+            String sql = "UPDATE Users SET first_name=?, last_name=?, license_no=?, license_expiry_date=?, email=?, password=?, contact_no=? WHERE user_id=?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, lastName);
+            pstmt.setString(3, licenseNo);
+            pstmt.setDate(4, new java.sql.Date(licenseExpiryDate.getTime()));
+            pstmt.setString(5, email);
+            pstmt.setString(6, password);
+            pstmt.setString(7, contactNo);
+            pstmt.setInt(8, userId);
+
+            int rows = pstmt.executeUpdate();
+            isSuccess = rows > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
+    }
+
+    public static boolean deleteUser(String id) {
+        boolean isSuccess = false;
+
+        try {
+            int userId = Integer.parseInt(id);
+            con = DB.getConnection();
+            String sql = "DELETE FROM Users WHERE user_id = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, userId);
+
+            int rows = pstmt.executeUpdate();
+            isSuccess = rows > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
+    }
+}

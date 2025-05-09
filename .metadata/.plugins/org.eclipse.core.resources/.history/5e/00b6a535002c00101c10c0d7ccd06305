@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, user.UserModel" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+</head>
+<body>
+    <h2>All Registered Users</h2>
+    <%
+        List<UserModel> users = (List<UserModel>) request.getAttribute("users");
+        if (users != null && !users.isEmpty()) {
+    %>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>License No</th>
+            <th>Expiry</th>
+            <th>Email</th>
+            <th>Contact</th>
+        </tr>
+        <%
+            for (UserModel user : users) {
+        %>
+        <tr>
+            <!-- Create a link to view the user details on user.jsp -->
+            <td><a href="<%= request.getContextPath() %>/user?id=<%= user.getUserId() %>"><%= user.getUserId() %></a></td>
+            <td><%= user.getFirstName() %> <%= user.getLastName() %></td>
+            <td><%= user.getLicenseNo() %></td>
+            <td><%= user.getLicenseExpiryDate() %></td>
+            <td><%= user.getEmail() %></td>
+            <td><%= user.getContactNo() %></td>
+        </tr>
+        <%
+            }
+        %>
+    </table>
+    <%
+        } else {
+    %>
+        <p>No users found.</p>
+    <%
+        }
+    %>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="user.UserModel" %>
+<%@ page import="user.UserDBUtil" %>
+<%@ page import="java.util.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+</head>
+<body>
+    <h2>Update User</h2>
+    
+    <%
+        String userIdStr = request.getParameter("id"); // Retrieve the user ID from the request parameter
+        if (userIdStr != null) {
+            try {
+                int userId = Integer.parseInt(userIdStr); // Parse the user ID to an integer
+                UserModel user = UserDBUtil.getUserDetails(String.valueOf(userId)); // Get user details by ID
+                if (user != null) { // If the user is found, populate the form
+    %>
+                    <form action="<%= request.getContextPath() %>/user/update" method="post">
+                        <input type="hidden" name="id" value="<%= user.getUserId() %>" />
+
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstName" value="<%= user.getFirstName() %>" required/><br>
+
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" name="lastName" value="<%= user.getLastName() %>" required/><br>
+
+                        <label for="licenseNo">License No:</label>
+                        <input type="text" id="licenseNo" name="licenseNo" value="<%= user.getLicenseNo() %>" required/><br>
+
+                        <label for="licenseExpiryDate">License Expiry Date:</label>
+                        <input type="date" id="licenseExpiryDate" name="licenseExpiryDate" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(user.getLicenseExpiryDate()) %>" required/><br>
+
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" value="<%= user.getEmail() %>" required/><br>
+
+                        <label for="contactNo">Contact No:</label>
+                        <input type="text" id="contactNo" name="contactNo" value="<%= user.getContactNo() %>" required/><br>
+
+                        <button type="submit">Update</button>
+                    </form>
+                <%
+                } else {
+                %>
+                    <p>User not found.</p>
+                <%
+                }
+            } catch (NumberFormatException e) {
+        %>
+            <p>Invalid user ID format.</p>
+        <%
+            }
+        } else {
+    %>
+        <p>Invalid user ID.</p>
+    <%
+        }
+    %>
+</body>
+</html>

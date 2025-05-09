@@ -1,0 +1,56 @@
+body {
+    background-color: #f8f9fa; /* Light gray background */
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+    background-color: #343a40; /* Dark theme for navbar */
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #ffc107; /* Bright logo color */
+}
+
+.page-title {
+    color: #007bff; /* Primary blue */
+}
+
+.card {
+    border-radius: 8px; /* Slightly rounded corners for modern look */
+    border: none;
+    background-color: white;
+}
+
+.card-footer {
+    border-top: 1px solid #e9ecef;
+}
+
+.btn {
+    border-radius: 4px; /* Subtle rounded corners */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #b21f2d;
+}
+
+.alert {
+    border-radius: 4px;
+    font-size: 16px;
+}

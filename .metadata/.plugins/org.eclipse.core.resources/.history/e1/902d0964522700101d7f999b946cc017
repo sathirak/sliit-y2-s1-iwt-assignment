@@ -1,0 +1,152 @@
+package user;
+
+import common.DB;
+import java.io.*;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+@WebServlet("/user")
+public class User extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Connection con = null;
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/plain");
+
+        try {
+            con = DB.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+
+            while (rs.next()) {
+                out.println(rs.getInt("user_id") + ": " + rs.getString("first_name") + " " + rs.getString("last_name"));
+            }
+
+        } catch (Exception e) {
+            out.write("Error: " + e.getMessage());
+        } finally {
+            try { if (con != null) con.close(); } catch (Exception ex) {}
+        }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        switch (action) {
+            case "create":
+                createUser(request, response);
+                break;
+            case "read":
+                readUser(request, response);
+                break;
+            case "update":
+                updateUser(request, response);
+                break;
+            case "delete":
+                deleteUser(request, response);
+                break;
+            default:
+                response.getWriter().write("Invalid action");
+        }
+    }
+
+    private void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Connection con = null;
+        PrintWriter out = response.getWriter();
+
+        try {
+            con = DB.getConnection();
+            String sql = "INSERT INTO users (first_name, last_name, license_no, license_expiry_date, email, password, contact_no) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, request.getParameter("firstName"));
+            stmt.setString(2, request.getParameter("lastName"));
+            stmt.setString(3, request.getParameter("licenseNo"));
+            stmt.setString(4, request.getParameter("licenseExpiryDate"));
+            stmt.setString(5, request.getParameter("email"));
+            stmt.setString(6, request.getParameter("password"));
+            stmt.setString(7, request.getParameter("contactNo"));
+
+            int rows = stmt.executeUpdate();
+            out.write(rows > 0 ? "User created successfully." : "Failed to create user.");
+
+        } catch (Exception e) {
+            out.write("Error: " + e.getMessage());
+        } finally {
+            try { if (con != null) con.close(); } catch (Exception ex) {}
+        }
+    }
+
+    private void readUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Connection con = null;
+        PrintWriter out = response.getWriter();
+
+        try {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            con = DB.getConnection();
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM users WHERE user_id = ?");
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                out.write("User: " + rs.getString("first_name") + " " + rs.getString("last_name"));
+            } else {
+                out.write("User not found");
+            }
+
+        } catch (Exception e) {
+            out.write("Error: " + e.getMessage());
+        } finally {
+            try { if (con != null) con.close(); } catch (Exception ex) {}
+        }
+    }
+
+    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Connection con = null;
+        PrintWriter out = response.getWriter();
+
+        try {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            con = DB.getConnection();
+
+            String sql = "UPDATE users SET first_name = ?, last_name = ?, contact_no = ? WHERE user_id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, request.getParameter("firstName"));
+            stmt.setString(2, request.getParameter("lastName"));
+            stmt.setString(3, request.getParameter("contactNo"));
+            stmt.setInt(4, userId);
+
+            int rows = stmt.executeUpdate();
+            out.write(rows > 0 ? "User updated successfully." : "User not found or not updated.");
+
+        } catch (Exception e) {
+            out.write("Error: " + e.getMessage());
+        } finally {
+            try { if (con != null) con.close(); } catch (Exception ex) {}
+        }
+    }
+
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Connection con = null;
+        PrintWriter out = response.getWriter();
+
+        try {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            con = DB.getConnection();
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM users WHERE user_id = ?");
+            stmt.setInt(1, userId);
+
+            int rows = stmt.executeUpdate();
+            out.write(rows > 0 ? "User deleted successfully." : "User not found.");
+
+        } catch (Exception e) {
+            out.write("Error: " + e.getMessage());
+        } finally {
+            try { if (con != null) con.close(); } catch (Exception ex) {}
+        }
+    }
+}

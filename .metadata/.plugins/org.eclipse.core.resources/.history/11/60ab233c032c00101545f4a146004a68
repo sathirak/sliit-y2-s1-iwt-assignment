@@ -1,0 +1,53 @@
+use sql5776488;
+
+-- Create User table
+CREATE TABLE User (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    license_no VARCHAR(20) UNIQUE,
+    license_expiry_date DATE,
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(100),
+    contact_no VARCHAR(20)
+);
+
+-- Create Location table
+CREATE TABLE Location (
+    location_id INT PRIMARY KEY AUTO_INCREMENT,
+    district VARCHAR(50),
+    location_contact_no VARCHAR(20),
+    street_no VARCHAR(10),
+    street VARCHAR(100),
+    city VARCHAR(50)
+);
+
+-- Create Vehicle table
+CREATE TABLE Vehicle (
+    vehicle_id INT PRIMARY KEY AUTO_INCREMENT,
+    category VARCHAR(50),
+    model VARCHAR(50),
+    brand VARCHAR(50),
+    gear VARCHAR(20),
+    color VARCHAR(30),
+    seat_no INT,
+    fuel_option VARCHAR(30),
+    plate_no VARCHAR(20) UNIQUE,
+    daily_rate DECIMAL(10,2)
+);
+
+-- Create Reservation table
+CREATE TABLE Reservation (
+    reservation_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    vehicle_id INT,
+    location_id INT,
+    pickup_date DATE,
+    return_date DATE,
+    amount DECIMAL(10,2),
+    no_of_dates INT,
+    pickup_location VARCHAR(100),
+    FOREIGN KEY (user_id) REFERENCES User(user_id),
+    FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id),
+    FOREIGN KEY (location_id) REFERENCES Location(location_id)
+);

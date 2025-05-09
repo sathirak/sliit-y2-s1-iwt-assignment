@@ -1,0 +1,32 @@
+package user;
+
+import common.DB;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+import java.io.*;
+import java.sql.*;
+
+@WebServlet("/user/create")
+public class InsertUser extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try (Connection con = DB.getConnection();
+             PrintWriter out = response.getWriter()) {
+
+            String sql = "INSERT INTO users (first_name, last_name, license_no, license_expiry_date, email, password, contact_no) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, request.getParameter("firstName"));
+            stmt.setString(2, request.getParameter("lastName"));
+            stmt.setString(3, request.getParameter("licenseNo"));
+            stmt.setString(4, request.getParameter("licenseExpiryDate"));
+            stmt.setString(5, request.getParameter("email"));
+            stmt.setString(6, request.getParameter("password"));
+            stmt.setString(7, request.getParameter("contactNo"));
+
+            int result = stmt.executeUpdate();
+            out.write(result > 0 ? "User created." : "Failed to create user.");
+
+        } catch (Exception e) {
+            response.getWriter().write("Error: " + e.getMessage());
+        }
+    }
+}
