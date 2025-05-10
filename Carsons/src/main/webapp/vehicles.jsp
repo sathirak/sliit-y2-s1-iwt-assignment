@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Vehicle List</title>
+    <title>Fleet Management | Carsons Rental Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -43,11 +43,9 @@
 
     <div class="row mb-3">
         <div class="col-md-6">
-            <!-- Add Button -->
             <a href="<%= request.getContextPath() %>/vehicle/insert" class="btn btn-primary">Add Vehicle</a>
         </div>
         <div class="col-md-6">
-            <!-- Client-side Search -->
             <div class="input-group">
                 <input type="text" id="searchInput" class="form-control" placeholder="Search vehicles...">
                 <button class="btn btn-outline-secondary" type="button" onclick="clearSearch()">Clear</button>
@@ -106,12 +104,10 @@
         new bootstrap.Toast(toastEl, { delay: 3000 }).show();
     });
     
-    // Add row click handling
     document.addEventListener('DOMContentLoaded', function() {
         const rows = document.querySelectorAll('.clickable-row');
         rows.forEach(row => {
             row.addEventListener('click', function(event) {
-                // Prevent click if the click was on a button, link or form
                 if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON' || 
                     event.target.tagName === 'INPUT' || event.target.closest('form')) {
                     return;
@@ -121,7 +117,6 @@
             row.style.cursor = 'pointer';
         });
         
-        // Add search functionality
         document.getElementById('searchInput').addEventListener('keyup', function() {
             let searchText = this.value.toLowerCase();
             const tableRows = document.querySelectorAll('.table tbody tr');
@@ -137,7 +132,6 @@
         });
     });
     
-    // Function to clear search
     function clearSearch() {
         document.getElementById('searchInput').value = '';
         const tableRows = document.querySelectorAll('.table tbody tr');
