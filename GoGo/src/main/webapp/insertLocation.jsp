@@ -19,7 +19,7 @@
 <body class="bg-light">
     <%@ include file="common/header.jsp" %>
     
-    <div class="container mt-5" id="locationFormContainer" style="display: none">
+    <div class="container mt-5">
         <h2 class="mb-4">Add New Location</h2>
         
         <form action="insert" method="post" 
@@ -80,25 +80,6 @@
                 }, false);
             });
         })();
-        
-        // Check authentication and show/hide form accordingly
-        document.addEventListener('DOMContentLoaded', function() {
-            checkAuth();
-        });
-        
-        function checkAuth() {
-            if (localStorage.getItem('authenticated') === 'true') {
-                document.getElementById('locationFormContainer').style.display = 'block';
-            } else {
-                document.getElementById('locationFormContainer').style.display = 'none';
-                // Define redirect function for after login
-                window.afterLoginRedirect = function() {
-                    document.getElementById('locationFormContainer').style.display = 'block';
-                };
-                // Show login modal
-                setTimeout(showLoginModal, 500);
-            }
-        }
     </script>
 </body>
 </html>

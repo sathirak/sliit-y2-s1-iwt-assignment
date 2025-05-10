@@ -19,7 +19,6 @@ public class InsertReservation extends HttpServlet {
         List<Map<String, String>> users = ReservationDBUtil.getUserOptions();
         List<Map<String, String>> vehicles = ReservationDBUtil.getVehicleOptions();
         List<Map<String, String>> locations = ReservationDBUtil.getLocationOptions();
-        List<Map<String, String>> pickupDropLocations = ReservationDBUtil.getPickupDropLocations();
 
         // Check if vehicleId is provided in the request
         String vehicleId = request.getParameter("vehicleId");
@@ -30,7 +29,7 @@ public class InsertReservation extends HttpServlet {
         request.setAttribute("users", users);
         request.setAttribute("vehicles", vehicles);
         request.setAttribute("locations", locations);
-        request.setAttribute("pickupDropLocations", pickupDropLocations);
+    
 
         request.getRequestDispatcher("/insertReservation.jsp").forward(request, response);
     }
