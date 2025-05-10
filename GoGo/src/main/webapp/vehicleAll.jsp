@@ -5,137 +5,177 @@
 <html>
 <head>
     <title>Available Vehicles</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
     <style>
         body {
-            background-color: #f7f8fa;
+            background-color: #f8f9fa;
         }
-
-        .navbar {
-            background-color: #800e06;
-            height: 80px;
-            border-bottom: 2px solid black;
-        }
-
-        .navbar-brand {
-            font-size: 26px;
-            font-weight: bold;
-            color: white;
-            transition: color 0.3s;
-        }
-
-        .navbar-brand:hover {
-            color: red;
-        }
-
-        .navbar-brand small {
-            font-size: 16px;
-            text-transform: none;
-        }
-
-        .nav-link {
-            font-size: 18px;
-            color: white !important;
-            margin-right: 15px;
-        }
-
+        
         .vehicle-card {
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 100%;
         }
-
+        
         .vehicle-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
-
+        
         .card-img-top {
             height: 200px;
             object-fit: cover;
         }
-
+        
         .daily-rate {
             font-size: 20px;
-            color: #f06156;
+            color: #dc3545;
+            font-weight: bold;
         }
-
-        .btn-primary {
-            background-color: #800e06;
-            border-color: #800e06;
+        
+        .section-heading {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
         }
-
-        .btn-primary:hover {
-            background-color: #a8120b;
-            border-color: #a8120b;
+        
+        .section-heading:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #dc3545;
+        }
+        
+        .btn-book-now {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-book-now:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            transform: translateY(-2px);
+        }
+        
+        .vehicle-features {
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-icon {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
+            color: #6c757d;
         }
     </style>
 </head>
-<body>
+<body class="bg-light">
 
 <%@ include file="common/header.jsp" %>
 
-<nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="#">
-        CARSONES <small>Rent A Car</small>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto align-items-center">
-            <li class="nav-item">
-                <a class="nav-link" href="home.jsp">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="locations.jsp">Our Locations</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contactus.jsp">Contact Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="logout.jsp">Log Out</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-
 <div class="container mt-5">
-    <h2 class="text-center mb-4" style="color: black;">Available Vehicles</h2>
-    <div class="row">
+    <h2 class="section-heading">Available Vehicles</h2>
+    
+    <div class="row g-4">
         <%
             List<Vehicle> vehicles = (List<Vehicle>)request.getAttribute("vehicles");
-            if (vehicles != null) {
+            if (vehicles != null && !vehicles.isEmpty()) {
                 for (Vehicle v : vehicles) {
         %>
         <div class="col-md-4 mb-4">
-            <div class="card vehicle-card">
+            <div class="card vehicle-card shadow-sm">
                 <img src="../images/Rent_car.png" class="card-img-top" alt="Vehicle Image">
                 <div class="card-body">
-                    <h5 class="card-title"><%= v.getBrand() %> <%= v.getModel() %></h5>
-                    <p class="card-text">
-                        <strong>Category:</strong> <%= v.getCategory() %><br>
-                        <strong>Gear:</strong> <%= v.getGear() %><br>
-                        <strong>Color:</strong> <%= v.getColor() %><br>
-                        <strong>Seats:</strong> <%= v.getSeat_no() %><br>
-                        <strong>Fuel:</strong> <%= v.getFuel_option() %><br>
-                        <strong>Plate No:</strong> <%= v.getPlate_no() %><br>
-                        <strong class="daily-rate">Rate: Rs. <%= v.getDaily_rate() %> / day</strong>
-                    </p>
-                    <a href="../reservation/insert?vehicleId=<%= v.getVehicle_id() %>" class="btn btn-primary btn-block">Book Now</a>
+                    <h5 class="card-title fw-bold"><%= v.getBrand() %> <%= v.getModel() %></h5>
+                    <div class="vehicle-features">
+                        <p class="mb-2"><i class="fas fa-car feature-icon"></i> <strong>Category:</strong> <%= v.getCategory() %></p>
+                        <p class="mb-2"><i class="fas fa-cog feature-icon"></i> <strong>Gear:</strong> <%= v.getGear() %></p>
+                        <p class="mb-2"><i class="fas fa-palette feature-icon"></i> <strong>Color:</strong> <%= v.getColor() %></p>
+                        <p class="mb-2"><i class="fas fa-users feature-icon"></i> <strong>Seats:</strong> <%= v.getSeat_no() %></p>
+                        <p class="mb-2"><i class="fas fa-gas-pump feature-icon"></i> <strong>Fuel:</strong> <%= v.getFuel_option() %></p>
+                        <p class="mb-2"><i class="fas fa-id-card feature-icon"></i> <strong>Plate No:</strong> <%= v.getPlate_no() %></p>
+                    </div>
+                    <p class="daily-rate mt-3">Rs. <%= v.getDaily_rate() %> / day</p>
+                </div>
+                <div class="card-footer bg-white border-0 pb-3 text-center">
+                    <a href="../reservation/insert?vehicleId=<%= v.getVehicle_id() %>" class="btn btn-book-now btn-lg w-100">
+                        <i class="fas fa-calendar-check me-2"></i>Book Now
+                    </a>
                 </div>
             </div>
         </div>
         <% 
                 }
+            } else {
+        %>
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle me-2"></i> No vehicles available at the moment.
+                </div>
+            </div>
+        <%
             }
         %>
     </div>
 </div>
 
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Call to Action Section -->
+<div class="bg-dark text-white py-5 text-center mt-5">
+    <div class="container">
+        <h2>Need Help Choosing a Vehicle?</h2>
+        <p class="lead">Our team is ready to assist you with finding the perfect vehicle for your needs.</p>
+        <a href="#" class="btn btn-outline-light btn-lg mt-3">Contact Us</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-black text-white py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>About Us</h5>
+                <p>We are a premier car rental service dedicated to providing quality vehicles and excellent service to our customers.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/GoGo/vehicle/all" class="text-white">Vehicles</a></li>
+                    <li><a href="/GoGo/reservation" class="text-white">Reservations</a></li>
+                    <li><a href="#" class="text-white">Terms & Conditions</a></li>
+                    <li><a href="#" class="text-white">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <address>
+                    <i class="fas fa-map-marker-alt me-2"></i> 123 Main Street, Colombo<br>
+                    <i class="fas fa-phone me-2"></i> +94 77 89 89 899<br>
+                    <i class="fas fa-envelope me-2"></i> carsones@gmail.com
+                </address>
+            </div>
+        </div>
+        <hr class="mt-4">
+        <div class="text-center">
+            <p class="mb-0">&copy; 2023 GoGo Car Rental. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

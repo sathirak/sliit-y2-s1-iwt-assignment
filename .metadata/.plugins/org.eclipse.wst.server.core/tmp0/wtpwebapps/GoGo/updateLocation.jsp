@@ -1,142 +1,86 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Location</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+        .was-validated .form-control:invalid,
+        .was-validated .form-select:invalid {
+            border-color: #dc3545;
         }
-        .header {
-            background-color: #d32f2f;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .header p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #d32f2f;
-        }
-        .promo-section {
-            background-color: #ffeb3b;
-            padding: 10px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .promo-section input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .promo-section button {
-            background-color: #4caf50;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .promo-section button:hover {
-            background-color: #45a049;
-        }
-        .submit-btn {
-            background-color: #d32f2f;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            width: 100%;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .submit-btn:hover {
-            background-color: #b71c1c;
+        .was-validated .form-control:invalid:focus,
+        .was-validated .form-select:invalid:focus {
+            box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
         }
     </style>
 </head>
-<body>
+<body class="bg-light">
     <%@ include file="common/header.jsp" %>
     
-    <div class="header">
-        <h1>CARS</h1>
-        <p>Since 2025</p>
-        <p>info@cars.com</p>
-    </div>
+    <div class="container mt-5">
+        <h2 class="mb-4">Update Location</h2>
 
-    <div class="container">
-        <h2>Update Location</h2>
-        <form action="update" method="post">
-            <div class="form-group">
-                <label for="location_id">Location ID</label>
-                <input type="text" id="location_id" name="location_id" value="${location.location_id}" readonly>
+        <form action="update" method="post" class="row g-3 bg-white p-4 rounded shadow-sm needs-validation" novalidate>
+            <div class="col-md-6">
+                <label for="location_id" class="form-label">Location ID</label>
+                <input type="text" class="form-control" id="location_id" name="location_id" value="${location.location_id}" readonly>
             </div>
 
-            <div class="form-group">
-                <label for="district">District</label>
-                <input type="text" id="district" name="district" value="${location.district}" required>
+            <div class="col-md-6">
+                <label for="district" class="form-label">District</label>
+                <input type="text" class="form-control" id="district" name="district" value="${location.district}" required>
+                <div class="invalid-feedback">Please provide a district.</div>
             </div>
 
-            <div class="form-group">
-                <label for="location_contact_no">Contact Number</label>
-                <input type="text" id="location_contact_no" name="location_contact_no" value="${location.location_contact_no}" required>
+            <div class="col-md-6">
+                <label for="location_contact_no" class="form-label">Contact Number</label>
+                <input type="text" class="form-control" id="location_contact_no" name="location_contact_no" value="${location.location_contact_no}" required>
+                <div class="invalid-feedback">Please provide a contact number.</div>
             </div>
 
-            <div class="form-group">
-                <label for="street_no">Street Number</label>
-                <input type="text" id="street_no" name="street_no" value="${location.street_no}" required>
+            <div class="col-md-6">
+                <label for="street_no" class="form-label">Street Number</label>
+                <input type="text" class="form-control" id="street_no" name="street_no" value="${location.street_no}" required>
+                <div class="invalid-feedback">Please provide a street number.</div>
             </div>
 
-            <div class="form-group">
-                <label for="street">Street</label>
-                <input type="text" id="street" name="street" value="${location.street}" required>
+            <div class="col-md-6">
+                <label for="street" class="form-label">Street</label>
+                <input type="text" class="form-control" id="street" name="street" value="${location.street}" required>
+                <div class="invalid-feedback">Please provide a street name.</div>
             </div>
 
-            <div class="form-group">
-                <label for="city">City</label>
-                <input type="text" id="city" name="city" value="${location.city}" required>
+            <div class="col-md-6">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city" value="${location.city}" required>
+                <div class="invalid-feedback">Please provide a city.</div>
             </div>
-            <button type="submit" class="submit-btn">Update Location</button>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Update Location</button>
+                <a href="${pageContext.request.contextPath}/location" class="btn btn-secondary ms-2">Back to List</a>
+            </div>
         </form>
     </div>
+
+    <!-- Bootstrap Validation Script -->
+    <script>
+        (function () {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
 </body>
 </html>

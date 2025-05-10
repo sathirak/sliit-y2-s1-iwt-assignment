@@ -5,31 +5,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Error</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #fff0f0;
-        padding: 30px;
-    }
-    .message-box {
-        max-width: 600px;
-        margin: auto;
-        padding: 20px;
-        background-color: #ffe0e0;
-        border: 1px solid red;
-        border-radius: 8px;
-        color: red;
-        text-align: center;
-    }
-</style>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
     <%@ include file="common/header.jsp" %>
 
-<div class="message-box">
-    <h2>Error!</h2>
-    <p><%= request.getAttribute("message") != null ? request.getAttribute("message") : "Oops! an unexpected error occured" %></p>
+<div class="container mt-5">
+    <div class="card border-danger shadow-sm">
+        <div class="card-header bg-danger text-white">
+            <h3 class="mb-0">Error</h3>
+        </div>
+        <div class="card-body text-center">
+            <div class="mb-3">
+                <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 3rem;"></i>
+            </div>
+            <h4><%= request.getAttribute("message") != null ? request.getAttribute("message") : "Oops! An unexpected error occurred." %></h4>
+            <div class="mt-4">
+                <button onclick="history.back()" class="btn btn-outline-secondary">Go Back</button>
+                <a href="<%= request.getContextPath() %>/" class="btn btn-outline-primary ms-2">Go to Home</a>
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
