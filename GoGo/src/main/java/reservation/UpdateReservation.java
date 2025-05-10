@@ -27,7 +27,7 @@ public class UpdateReservation extends HttpServlet {
         request.setAttribute("vehicles", vehicles);
         request.setAttribute("locations", locations);
 
-        request.getRequestDispatcher("/updateReservation.jsp").forward(request, response);
+        request.getRequestDispatcher("/reservationManagement/updateReservation.jsp").forward(request, response);
     }
 
     @Override

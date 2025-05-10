@@ -12,8 +12,11 @@ public class DB {
 	public static Connection getConnection() {
 
 		try {
+
 			Class.forName("com.mysql.jdbc.Driver");
+
 			con = DriverManager.getConnection(url, userName, password);
+
 		} catch (Exception e) {
 			System.out.println("Database connection is not success!!!");
 		}

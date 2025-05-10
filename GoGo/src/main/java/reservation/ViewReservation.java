@@ -20,7 +20,7 @@ public class ViewReservation extends HttpServlet {
                 // View a specific reservation
                 ReservationModel res = ReservationDBUtil.getReservationById(id);
                 request.setAttribute("reservation", res);
-                request.getRequestDispatcher("/viewReservation.jsp").forward(request, response);
+                request.getRequestDispatcher("/reservationManagement/viewReservation.jsp").forward(request, response);
 
             } else {
                 // Paginated list view
@@ -42,7 +42,7 @@ public class ViewReservation extends HttpServlet {
                 request.setAttribute("currentPage", page);
                 request.setAttribute("totalPages", totalPages);
 
-                request.getRequestDispatcher("/reservations.jsp").forward(request, response);
+                request.getRequestDispatcher("/reservationManagement/reservations.jsp").forward(request, response);
             }
 
         } catch (Exception e) {

@@ -231,19 +231,21 @@ public class ReservationDBUtil {
         }
         return list;
     }
+
+    public static double getDailyRateByVehicleId(String vehicleId) {
+        double rate = 0;
+        String sql = "SELECT daily_rate FROM Vehicle WHERE vehicle_id = ?";
     
-    public static List<Map<String, String>> getPickupDropLocations() {
-        List<Map<String, String>> list = new ArrayList<>();
-        String sql = "SELECT DISTINCT location_name FROM (SELECT CONCAT(district, ', ', city) AS location_name FROM Location) AS locations ORDER BY location_name";
-        try (Connection con = DB.getConnection(); Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                Map<String, String> entry = new HashMap<>();
-                entry.put("name", rs.getString("location_name"));
-                list.add(entry);
+        try (Connection con = DB.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, Integer.parseInt(vehicleId));
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                rate = rs.getDouble("daily_rate");
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error fetching pickup/drop locations", e);
+            e.printStackTrace();
         }
-        return list;
+        return rate;
     }
+    
 }
