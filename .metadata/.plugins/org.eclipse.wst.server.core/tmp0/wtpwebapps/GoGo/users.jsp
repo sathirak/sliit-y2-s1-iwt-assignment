@@ -6,125 +6,100 @@
     <meta charset="UTF-8">
     <title>All Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff;
-            color: #000;
-        }
-        h2 {
-            text-align: center;
-            color: #fff;
-            background-color: #d32f2f;
-            padding: 10px;
-            margin: 0;
-        }
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            border: 1px solid #ccc;
-            background-color: #fff;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: #d32f2f;
-            color: #fff;
-            font-weight: bold;
-        }
-        td {
-            background-color: #fff;
-            color: #000;
-        }
-        a {
-            color: #000;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .action-buttons form {
-            display: inline;
-        }
-        .action-buttons a, .action-buttons button {
-            padding: 5px 10px;
-            text-decoration: none;
-            border-radius: 3px;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-        }
-        .update-btn {
-            background-color: #ffeb3b;
-            color: #000;
-        }
-        .delete-btn {
-            background-color: #d32f2f;
-            color: #fff;
-        }
-    </style>
 </head>
-<body>
+<body class="bg-light">
     <%@ include file="common/header.jsp" %>
     
-    <div class="container mt-4">
-        <h2>All Registered Users</h2>
+    <%
+        String successMessage = (String) session.getAttribute("success");
+        String errorMessage = (String) session.getAttribute("error");
+        if (successMessage != null) session.removeAttribute("success");
+        if (errorMessage != null) session.removeAttribute("error");
+    %>
+
+    <!-- Toast Container -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+        <% if (successMessage != null) { %>
+            <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body"><%= successMessage %></div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        <% } %>
+        <% if (errorMessage != null) { %>
+            <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body"><%= errorMessage %></div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        <% } %>
+    </div>
+    
+    <div class="container mt-5">
+        <h2 class="mb-4">All Registered Users</h2>
+        
+        <!-- Add Button -->
+        <a href="<%= request.getContextPath() %>/user/insert" class="btn btn-primary mb-3">Add User</a>
+        
         <%
             List<UserModel> users = (List<UserModel>) request.getAttribute("users");
             if (users != null && !users.isEmpty()) {
         %>
-        <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>License No</th>
-                <th>Expiry</th>
-                <th>Email</th>
-                <th>Contact</th>
-                <th>Actions</th>
-            </tr>
-            <%
-                for (UserModel user : users) {
-            %>
-            <tr>
-                <td><a href="<%= request.getContextPath() %>/user?id=<%= user.getUserId() %>"><%= user.getUserId() %></a></td>
-                <td><%= user.getFirstName() %> <%= user.getLastName() %></td>
-                <td><%= user.getLicenseNo() %></td>
-                <td><%= user.getLicenseExpiryDate() %></td>
-                <td><%= user.getEmail() %></td>
-                <td><%= user.getContactNo() %></td>
-                <td class="action-buttons">
-                    <!-- Update button -->
-                    <form action="user/update" method="get">
-                        <input type="hidden" name="id" value="<%= user.getUserId() %>">
-                        <button type="submit" class="update-btn">Update</button>
-                    </form>
-                    <!-- Delete button -->
-                    <form action="user/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this user?');">
-                        <input type="hidden" name="id" value="<%= user.getUserId() %>">
-                        <button type="submit" class="delete-btn">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            <%
-                }
-            %>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover bg-white shadow-sm">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>License No</th>
+                        <th>Expiry</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        for (UserModel user : users) {
+                    %>
+                    <tr>
+                        <td><a href="<%= request.getContextPath() %>/user?id=<%= user.getUserId() %>" class="text-decoration-none"><%= user.getUserId() %></a></td>
+                        <td><%= user.getFirstName() %> <%= user.getLastName() %></td>
+                        <td><%= user.getLicenseNo() %></td>
+                        <td><%= user.getLicenseExpiryDate() %></td>
+                        <td><%= user.getEmail() %></td>
+                        <td><%= user.getContactNo() %></td>
+                        <td>
+                            <a href="<%= request.getContextPath() %>/user?id=<%= user.getUserId() %>" class="btn btn-sm btn-info text-white">View</a>
+                            <a href="<%= request.getContextPath() %>/user/update?id=<%= user.getUserId() %>" class="btn btn-sm btn-warning text-white">Edit</a>
+                            <form action="<%= request.getContextPath() %>/user/delete" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                <input type="hidden" name="id" value="<%= user.getUserId() %>">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                </tbody>
+            </table>
+        </div>
         <%
             } else {
         %>
-            <p>No users found.</p>
+            <div class="alert alert-warning">No users found.</div>
         <%
             }
         %>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('.toast').forEach(function (toastEl) {
+            new bootstrap.Toast(toastEl, { delay: 3000 }).show();
+        });
+    </script>
 </body>
 </html>

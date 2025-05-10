@@ -162,7 +162,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="C:\Users\sathi\Downloads\sliit-y2-s1-iwt-assignment-copy\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\Users\sathi\Downloads\sliit-y2-s1-iwt-assignment-copy\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\GoGo" path="/GoGo" reloadable="true" source="org.eclipse.jst.jee.server:GoGo"/></Host>
+      <Context docBase="C:\Users\sathi\Downloads\sliit-y2-s1-oop-assignment\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\Users\sathi\Downloads\sliit-y2-s1-oop-assignment\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\GoGo" path="/GoGo" reloadable="true" source="org.eclipse.jst.jee.server:GoGo"/></Host>
     </Engine>
   </Service>
 </Server>

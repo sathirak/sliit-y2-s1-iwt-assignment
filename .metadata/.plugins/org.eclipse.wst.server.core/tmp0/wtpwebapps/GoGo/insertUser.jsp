@@ -4,128 +4,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
+        .was-validated .form-control:invalid,
+        .was-validated .form-select:invalid {
+            border-color: #dc3545;
         }
-        .header {
-            background-color: #d32f2f;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .header p {
-            margin: 5px 0;
-        }
-        .nav {
-            display: flex;
-            justify-content: space-around;
-            background-color: #d32f2f;
-            padding: 10px 0;
-        }
-        .nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .form-container {
-            max-width: 90%;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .form-row {
-            display: flex;
-            gap: 20px;
-        }
-        .form-row .form-group {
-            flex: 1;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #d32f2f;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #b71c1c;
+        .was-validated .form-control:invalid:focus,
+        .was-validated .form-select:invalid:focus {
+            box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
         }
     </style>
 </head>
-<body>
+<body class="bg-light">
     <%@ include file="common/header.jsp" %>
-    <div class="nav">
-        <a href="#">MENU</a>
-    </div>
-    <div class="form-container">
-        <h2>Insert New User</h2>
-        <form action="${pageContext.request.contextPath}/user/insert" method="post">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" required>
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" required>
-                </div>
+    
+    <div class="container mt-5">
+        <h2 class="mb-4">Insert New User</h2>
+        
+        <form action="${pageContext.request.contextPath}/user/insert" method="post" 
+              class="row g-3 bg-white p-4 rounded shadow-sm needs-validation" novalidate>
+            
+            <div class="col-md-6">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" id="firstName" name="firstName" class="form-control" required>
+                <div class="invalid-feedback">Please provide a first name.</div>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="licenseNo">License Number</label>
-                    <input type="text" id="licenseNo" name="licenseNo" required>
-                </div>
-                <div class="form-group">
-                    <label for="licenseExpiryDate">License Expiry Date</label>
-                    <input type="date" id="licenseExpiryDate" name="licenseExpiryDate" required>
-                </div>
+            
+            <div class="col-md-6">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" id="lastName" name="lastName" class="form-control" required>
+                <div class="invalid-feedback">Please provide a last name.</div>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+            
+            <div class="col-md-6">
+                <label for="licenseNo" class="form-label">License Number</label>
+                <input type="text" id="licenseNo" name="licenseNo" class="form-control" required>
+                <div class="invalid-feedback">Please provide a license number.</div>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+            
+            <div class="col-md-6">
+                <label for="licenseExpiryDate" class="form-label">License Expiry Date</label>
+                <input type="date" id="licenseExpiryDate" name="licenseExpiryDate" class="form-control" required>
+                <div class="invalid-feedback">Please provide the license expiry date.</div>
             </div>
-            <div class="form-group">
-                <label for="contactNo">Contact Number</label>
-                <input type="text" id="contactNo" name="contactNo" required>
+            
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+                <div class="invalid-feedback">Please provide a valid email.</div>
             </div>
-            <button type="submit">SUBMIT</button>
+            
+            <div class="col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+                <div class="invalid-feedback">Please provide a password.</div>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="contactNo" class="form-label">Contact Number</label>
+                <input type="text" id="contactNo" name="contactNo" class="form-control" required>
+                <div class="invalid-feedback">Please provide a contact number.</div>
+            </div>
+            
+            <div class="col-12">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <a href="${pageContext.request.contextPath}/user" class="btn btn-secondary ms-2">Back to List</a>
+            </div>
         </form>
     </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Bootstrap Validation Script -->
+    <script>
+        (function () {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
 </body>
 </html>

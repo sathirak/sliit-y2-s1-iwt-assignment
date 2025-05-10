@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="<%= request.getContextPath() %>/home.jsp">
+        <a class="navbar-brand" href="<%= request.getContextPath() %>/home">
             <strong>CARSONES</strong> Rental
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
@@ -26,7 +26,7 @@
                 </li>
             </ul>
             <div class="d-flex">
-                <a href="<%= request.getContextPath() %>/logout.jsp" class="btn btn-outline-light btn-sm">Logout</a>
+                <a href="<%= request.getContextPath() %>/user/insert" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>
     </div>

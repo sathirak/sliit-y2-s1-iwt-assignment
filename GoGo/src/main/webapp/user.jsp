@@ -5,42 +5,63 @@
 <head>
     <meta charset="UTF-8">
     <title>View User</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/theme.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
     <%@ include file="common/header.jsp" %>
     
-    <div class="container">
-        <h2 class="page-title">User Details</h2>
+    <div class="container mt-4">
+        <h2 class="mb-4">User Details</h2>
         <%
             UserModel user = (UserModel) request.getAttribute("user");
             if (user != null) {
         %>
-            <div class="user-details">
-                <p><%= user.getUserId() %></p>
-                <p><%= user.getFirstName() %> <%= user.getLastName() %></p>
-                <p><%= user.getLicenseNo() %></p>
-                <p><%= user.getLicenseExpiryDate() %></p>
-                <p><%= user.getEmail() %></p>
-                <p><%= user.getContactNo() %></p>
-            </div>
-            
-            <form action="<%= request.getContextPath() %>/user/update" method="get" class="form-inline">
-                <input type="hidden" name="id" value="<%= user.getUserId() %>" />
-                <button type="submit" class="btn btn-gray">Update User</button>
-            </form>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">User ID</dt>
+                    <dd class="col-sm-8"><%= user.getUserId() %></dd>
 
-            <form action="<%= request.getContextPath() %>/user/delete" method="post" class="form-inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
-                <input type="hidden" name="id" value="<%= user.getUserId() %>" />
-                <button type="submit" class="btn btn-red">Delete User</button>
-            </form>
+                    <dt class="col-sm-4">Full Name</dt>
+                    <dd class="col-sm-8"><%= user.getFirstName() %> <%= user.getLastName() %></dd>
+
+                    <dt class="col-sm-4">License No</dt>
+                    <dd class="col-sm-8"><%= user.getLicenseNo() %></dd>
+
+                    <dt class="col-sm-4">License Expiry Date</dt>
+                    <dd class="col-sm-8"><%= user.getLicenseExpiryDate() %></dd>
+
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8"><%= user.getEmail() %></dd>
+
+                    <dt class="col-sm-4">Contact No</dt>
+                    <dd class="col-sm-8"><%= user.getContactNo() %></dd>
+                </dl>
+
+                <div class="mt-4">
+                    <form action="<%= request.getContextPath() %>/user/update" method="get" class="d-inline">
+                        <input type="hidden" name="id" value="<%= user.getUserId() %>" />
+                        <button type="submit" class="btn btn-warning text-white">Update</button>
+                    </form>
+
+                    <form action="<%= request.getContextPath() %>/user/delete" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <input type="hidden" name="id" value="<%= user.getUserId() %>" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+
+                    <a href="<%= request.getContextPath() %>/user" class="btn btn-secondary ms-2">Back to List</a>
+                </div>
+            </div>
+        </div>
         <%
             } else {
         %>
-            <p class="error-message">User not found.</p>
+            <div class="alert alert-danger">User not found.</div>
         <%
             }
         %>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
