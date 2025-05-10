@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,10 +20,14 @@
 <body class="bg-light">
     <%@ include file="common/header.jsp" %>
     
-    <div class="container mt-5" id="locationFormContainer" style="display: none">
+    <div class="container mt-5">
         <h2 class="mb-4">Add New Location</h2>
         
-        <form action="insert" method="post" 
+        <c:if test="${not empty errorMsg}">
+            <div class="alert alert-danger">${errorMsg}</div>
+        </c:if>
+        
+        <form action="${pageContext.request.contextPath}/location/insert" method="post" 
               class="row g-3 bg-white p-4 rounded shadow-sm needs-validation" novalidate>
             
             <div class="col-md-6">
@@ -80,25 +85,6 @@
                 }, false);
             });
         })();
-        
-        // Check authentication and show/hide form accordingly
-        document.addEventListener('DOMContentLoaded', function() {
-            checkAuth();
-        });
-        
-        function checkAuth() {
-            if (localStorage.getItem('authenticated') === 'true') {
-                document.getElementById('locationFormContainer').style.display = 'block';
-            } else {
-                document.getElementById('locationFormContainer').style.display = 'none';
-                // Define redirect function for after login
-                window.afterLoginRedirect = function() {
-                    document.getElementById('locationFormContainer').style.display = 'block';
-                };
-                // Show login modal
-                setTimeout(showLoginModal, 500);
-            }
-        }
     </script>
 </body>
 </html>

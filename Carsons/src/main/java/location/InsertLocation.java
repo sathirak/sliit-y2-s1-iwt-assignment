@@ -17,7 +17,7 @@ public class InsertLocation extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         LOGGER.info("Displaying location insert form");
-        request.getRequestDispatcher("../insertLocation.jsp").forward(request, response);
+        request.getRequestDispatcher("/insertLocation.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
