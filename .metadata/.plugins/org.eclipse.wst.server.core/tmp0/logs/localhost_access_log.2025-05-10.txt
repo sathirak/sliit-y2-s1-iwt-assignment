@@ -77,3 +77,12 @@
 0:0:0:0:0:0:0:1 - - [10/May/2025:00:17:59 -0700] "GET /GoGo/location HTTP/1.1" 200 11025
 127.0.0.1 - - [10/May/2025:00:19:27 -0700] "GET / HTTP/1.1" 404 752
 0:0:0:0:0:0:0:1 - - [10/May/2025:00:19:33 -0700] "GET /GoGo/location HTTP/1.1" 200 6121
+127.0.0.1 - - [10/May/2025:00:28:47 -0700] "GET / HTTP/1.1" 404 752
+0:0:0:0:0:0:0:1 - - [10/May/2025:00:29:00 -0700] "GET /GoGo/reservation HTTP/1.1" 200 8845
+0:0:0:0:0:0:0:1 - - [10/May/2025:00:29:09 -0700] "GET /GoGo/reservation/insert HTTP/1.1" 200 7542
+0:0:0:0:0:0:0:1 - - [10/May/2025:00:29:52 -0700] "GET /GoGo/reservation/insert HTTP/1.1" 200 7128
+0:0:0:0:0:0:0:1 - - [10/May/2025:00:30:06 -0700] "GET /GoGo/reservation/getRate?vehicleId=2 HTTP/1.1" 200 24
+0:0:0:0:0:0:0:1 - - [10/May/2025:00:30:44 -0700] "GET /GoGo/reservation/insert HTTP/1.1" 200 8506
+127.0.0.1 - - [10/May/2025:00:37:12 -0700] "GET / HTTP/1.1" 404 752
+0:0:0:0:0:0:0:1 - - [10/May/2025:00:37:23 -0700] "GET /GoGo/reservation/insert HTTP/1.1" 200 8505
+0:0:0:0:0:0:0:1 - - [10/May/2025:00:37:32 -0700] "GET /GoGo/reservation/getRate?vehicleId=1 HTTP/1.1" 200 24

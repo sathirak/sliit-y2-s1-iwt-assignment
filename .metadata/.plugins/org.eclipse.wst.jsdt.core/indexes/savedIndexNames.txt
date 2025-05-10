@@ -1,10 +1,7 @@
 INDEX VERSION 1.4+C:\Users\sathi\Downloads\sliit-y2-s1-oop-assignment\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-706014529.index
 1897295286.index
 578092590.index
 298156123.index
-3057000362.index
 84469297.index
 1472319626.index
 482122821.index
-706014529.index

@@ -17,7 +17,8 @@
     </style>
 </head>
 <body class="bg-light">
-    <%@ include file="common/header.jsp" %>
+<%@ include file="common/header.jsp" %>
+
 <div class="container mt-5">
     <h2 class="mb-4">Add New Reservation</h2>
 
@@ -46,13 +47,9 @@
                 <option value="">Select Vehicle</option>
                 <%
                     List<Map<String, String>> vehicles = (List<Map<String, String>>) request.getAttribute("vehicles");
-                    String preSelectedVehicleId = (String) request.getAttribute("preSelectedVehicleId");
-                    
                     for (Map<String, String> vehicle : vehicles) {
-                        boolean selected = preSelectedVehicleId != null && 
-                                          preSelectedVehicleId.equals(vehicle.get("id"));
                 %>
-                    <option value="<%= vehicle.get("id") %>" <%= selected ? "selected" : "" %>><%= vehicle.get("name") %></option>
+                    <option value="<%= vehicle.get("id") %>"><%= vehicle.get("name") %></option>
                 <% } %>
             </select>
             <div class="invalid-feedback">Please select a vehicle.</div>
@@ -60,7 +57,7 @@
 
         <!-- Location Dropdown -->
         <div class="col-md-4">
-            <label class="form-label">Location</label>
+            <label class="form-label">Pickup location/return location</label>
             <select name="locationId" class="form-select" required>
                 <option value="">Select Location</option>
                 <%
@@ -90,45 +87,18 @@
         <!-- Amount -->
         <div class="col-md-6">
             <label class="form-label">Amount</label>
-            <input type="number" step="0.01" name="amount" class="form-control" required />
-            <div class="invalid-feedback">Please enter a valid amount.</div>
+            <input type="number" step="0.01" name="amount" class="form-control" required readonly />
+            <div class="invalid-feedback">This will be calculated automatically.</div>
         </div>
 
         <!-- No. of Days -->
         <div class="col-md-6">
             <label class="form-label">No. of Days</label>
-            <input type="number" name="noOfDates" class="form-control" required />
-            <div class="invalid-feedback">Please enter number of days.</div>
+            <input type="number" name="noOfDates" class="form-control" required readonly />
+            <div class="invalid-feedback">This will be auto-calculated.</div>
         </div>
 
-        <!-- Pickup Location -->
-        <div class="col-md-6">
-            <label class="form-label">Pickup Location</label>
-            <select name="pickupLocation" class="form-select" required>
-                <option value="">Select Pickup Location</option>
-                <%
-                    List<Map<String, String>> pickupDropLocations = (List<Map<String, String>>) request.getAttribute("pickupDropLocations");
-                    for (Map<String, String> loc : pickupDropLocations) {
-                %>
-                    <option value="<%= loc.get("name") %>"><%= loc.get("name") %></option>
-                <% } %>
-            </select>
-            <div class="invalid-feedback">Please select a pickup location.</div>
-        </div>
-
-        <!-- Return Location -->
-        <div class="col-md-6">
-            <label class="form-label">Return Location</label>
-            <select name="returnLocation" class="form-select" required>
-                <option value="">Select Return Location</option>
-                <%
-                    for (Map<String, String> loc : pickupDropLocations) {
-                %>
-                    <option value="<%= loc.get("name") %>"><%= loc.get("name") %></option>
-                <% } %>
-            </select>
-            <div class="invalid-feedback">Please select a return location.</div>
-        </div>
+  
 
         <!-- Submit -->
         <div class="col-12">
@@ -138,10 +108,11 @@
     </form>
 </div>
 
-<!-- Bootstrap Validation Script -->
+<!-- Bootstrap Validation & Dynamic Calculation -->
 <script>
     (function () {
         'use strict';
+
         const forms = document.querySelectorAll('.needs-validation');
         Array.from(forms).forEach(function (form) {
             form.addEventListener('submit', function (event) {
@@ -151,6 +122,59 @@
                 }
                 form.classList.add('was-validated');
             }, false);
+        });
+
+        const pickupDateInput = document.querySelector('input[name="pickupDate"]');
+        const returnDateInput = document.querySelector('input[name="returnDate"]');
+        const noOfDatesInput = document.querySelector('input[name="noOfDates"]');
+        const vehicleSelect = document.querySelector('select[name="vehicleId"]');
+        const amountInput = document.querySelector('input[name="amount"]');
+
+        let currentRate = 0;
+
+        function calculateDaysAndAmount() {
+            const pickup = new Date(pickupDateInput.value);
+            const ret = new Date(returnDateInput.value);
+
+            if (pickupDateInput.value && returnDateInput.value) {
+                if (ret <= pickup) {
+                    alert("Return Date must be after Pickup Date.");
+                    returnDateInput.value = '';
+                    noOfDatesInput.value = '';
+                    amountInput.value = '';
+                } else {
+                    const diffTime = ret - pickup;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    noOfDatesInput.value = diffDays;
+
+                    if (currentRate > 0) {
+                        amountInput.value = (currentRate * diffDays).toFixed(2);
+                    }
+                }
+            }
+        }
+
+        function fetchRate(vehicleId) {
+            if (!vehicleId) return;
+
+            fetch(`<%= request.getContextPath() %>/reservation/getRate?vehicleId=` + vehicleId)
+                .then(response => response.json())
+                .then(data => {
+                    currentRate = data.rate || 0;
+                    const days = parseInt(noOfDatesInput.value);
+                    if (!isNaN(days)) {
+                        amountInput.value = (currentRate * days).toFixed(2);
+                    }
+                })
+                .catch(err => {
+                    console.error("Rate fetch error:", err);
+                });
+        }
+
+        pickupDateInput.addEventListener('change', calculateDaysAndAmount);
+        returnDateInput.addEventListener('change', calculateDaysAndAmount);
+        vehicleSelect.addEventListener('change', function () {
+            fetchRate(this.value);
         });
     })();
 </script>
